@@ -1,3 +1,11 @@
+from enum import Enum
+
+class GameState(Enum):
+    PLAYING = 0
+    WIN = 1
+    DRAW = 2
+
+
 class tic_tac_toe_board():
     def __init__(self,rows,columns):
         self.rows = rows
@@ -16,37 +24,41 @@ class tic_tac_toe_board():
         else:
             return True
 
-    def check_win_codition(self) -> bool:
+    def check_win_codition(self):
         num_rows = len(self.board)
         num_cols = len(self.board[0])
 
         # check rows
         for row in self.board:
             if row[0] is not None and all(cell == row[0] for cell in row):
-                return True
+                return GameState.WIN
 
         # check columns
         for col in range(num_cols):
             if self.board[0][col] is not None and all(self.board[row][col] == self.board[0][col] for row in range(num_rows)):
-                return True
+                return GameState.WIN
 
         # check diagonals (only valid on square boards)
         if num_rows == num_cols:
             if self.board[0][0] is not None and all(self.board[i][i] == self.board[0][0] for i in range(num_rows)):
-                return True
+                return GameState.WIN 
             if self.board[0][num_cols - 1] is not None and all(self.board[i][num_cols - 1 - i] == self.board[0][num_cols - 1] for i in range(num_rows)):
-                return True
+                return GameState.WIN 
 
-        return False
+        # Check if game is a DRAW
+        if all(cell is not None for row in self.board for cell in row):
+            return GameState.DRAW
+
+        return GameState.PLAYING
 
     def game_loop(self):
-        game_won = False
+        game_state = GameState.PLAYING
         current_round = 0
 
         self.print_board()
 
 
-        while (game_won is False):
+        while (game_state is GameState.PLAYING):
             try:
                 row = int(input("Select Row:")) - 1
                 column = int(input("Select Column:")) - 1
@@ -66,9 +78,11 @@ class tic_tac_toe_board():
                     player = "o"
 
                 self.mark_board_at_location(row,column,player)
-                if(self.check_win_codition()):
-                    game_won = True
-                    print("Game Won!")
+                game_state = self.check_win_codition()
+
+                if game_state is GameState.WIN: print("WIN")
+                if game_state is GameState.DRAW: print("DRAW")
+
             except ValueError:
                 print("Wrong input try again")
 
