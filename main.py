@@ -36,22 +36,29 @@ class tic_tac_toe_board():
         game_won = False
         current_round = 0
 
-        while (game_won is False):
-            current_round += 1
-            row = int(input("Select Row:")) - 1
-            column = int(input("Select Column:")) - 1
-            if row not in range(len(self.board)) or column not in range(len(self.board[0])):
-                print("Input Too Large")
-                continue
-            if current_round % 2 == 0:
-                player = "x"
-            else:
-                player = "o"
+        self.print_board()
 
-            self.mark_board_at_location(row,column,player)
-            if(self.check_win_codition()):
-                game_won = True
-                print("Game Won!")
+
+        while (game_won is False):
+            try:
+                row = int(input("Select Row:")) - 1
+                column = int(input("Select Column:")) - 1
+                current_round += 1
+                if row not in range(len(self.board)) or column not in range(len(self.board[0])):
+                    print("Input Too Large")
+                    continue
+                if current_round % 2 == 0:
+                    player = "x"
+                else:
+                    player = "o"
+
+                self.mark_board_at_location(row,column,player)
+                if(self.check_win_codition()):
+                    game_won = True
+                    print("Game Won!")
+            except ValueError:
+                print("Wrong input try again")
+
 
     def print_board(self) -> None:
       for i, row in enumerate(self.board):
