@@ -9,6 +9,13 @@ class tic_tac_toe_board():
         self.board[x][y] = player_marker
         self.print_board()
 
+    def check_if_location_occupied(self,x,y):
+        if (self.board[x][y] != None):
+            print("Location Occupied")
+            return False
+        else:
+            return True
+
     def check_win_codition(self) -> bool:
         num_rows = len(self.board)
         num_cols = len(self.board[0])
@@ -43,10 +50,16 @@ class tic_tac_toe_board():
             try:
                 row = int(input("Select Row:")) - 1
                 column = int(input("Select Column:")) - 1
-                current_round += 1
+
+
                 if row not in range(len(self.board)) or column not in range(len(self.board[0])):
                     print("Input Too Large")
                     continue
+                if not (self.check_if_location_occupied(row,column)):
+                    continue
+
+                current_round += 1
+
                 if current_round % 2 == 0:
                     player = "x"
                 else:
