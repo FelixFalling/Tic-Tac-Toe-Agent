@@ -57,7 +57,6 @@ class tic_tac_toe_board():
 
         self.print_board()
 
-
         while (game_state is GameState.PLAYING):
             try:
                 row = int(input("Select Row:")) - 1
@@ -88,10 +87,15 @@ class tic_tac_toe_board():
 
 
     def print_board(self) -> None:
-      for i, row in enumerate(self.board):
-          current_row = (" | ".join(" " if cell is None else str(cell) for cell in row))
-          print(current_row)
-          print((len(current_row)*"-"))
+        col_count = len(self.board[0])
+        header = "    " + " | ".join(str(c + 1) for c in range(col_count))
+        separator = "  " + "-" * (len(header) - 2)
+        print(header)
+        print(separator)
+        for i, row in enumerate(self.board):
+            current_row = " | ".join(" " if cell is None else str(cell) for cell in row)
+            print(f"{i + 1} | {current_row}")
+            print(separator)
 
 def main():
     my_board = tic_tac_toe_board(3,3)
