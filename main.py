@@ -5,12 +5,29 @@ class GameState(Enum):
     WIN = 1
     DRAW = 2
 
+class PlayType(Enum):
+    PLAYER_VS_PLAYER = 0
+    AGENT_VS_AGENT = 1
+    AGENT_VS_PLAYER = 2
+
 
 class tic_tac_toe_board():
-    def __init__(self,rows,columns):
+    def __init__(self,rows,columns,play_type):
         self.rows = rows
         self.columns = columns
         self.board = [[None for i in range(rows)] for j in range(columns)]
+        self.playing_type = play_type
+
+        if self.playing_type == PlayType.PLAYER_VS_PLAYER:
+            print("Player vs Player")
+        elif passself.playing_type == PlayType.AGENT_VS_AGENT:
+            print("Agent vs Agent")
+        elif passself.playing_type == PlayType.AGENT_VS_PLAYER:
+            print("Agent vs Player")
+        else:
+            print("init failed!")
+            self.playing_type = PlayType.PLAYER_VS_PLAYER
+
 
 
     def mark_board_at_location(self,x,y,player_marker):
@@ -59,12 +76,10 @@ class tic_tac_toe_board():
 
         while (game_state is GameState.PLAYING):
             try:
-                row = int(input("Select Row:")) - 1
-                column = int(input("Select Column:")) - 1
-
+                row, column = self.input_type()
 
                 if row not in range(len(self.board)) or column not in range(len(self.board[0])):
-                    print("Input Too Large")
+                    print("Input Not In Board Range")
                     continue
                 if not (self.check_if_location_occupied(row,column)):
                     continue
@@ -85,8 +100,18 @@ class tic_tac_toe_board():
             except ValueError:
                 print("Wrong input try again")
 
+    def input_type(self) -> tuple[int,int]:
+        if self.playing_type == PlayType.PLAYER_VS_PLAYER:
+            row = int(input("Select Row:")) - 1
+            column = int(input("Select Column:")) - 1
+
+            return row, column
+
 
     def print_board(self) -> None:
+        if self.playing_type == PlayType.AGENT_VS_AGENT:
+            return
+
         col_count = len(self.board[0])
         header = "    " + " | ".join(str(c + 1) for c in range(col_count))
         separator = "  " + "-" * (len(header) - 2)
@@ -97,8 +122,10 @@ class tic_tac_toe_board():
             print(f"{i + 1} | {current_row}")
             print(separator)
 
+
+
 def main():
-    my_board = tic_tac_toe_board(3,3)
+    my_board = tic_tac_toe_board(3,3,PlayType.PLAYER_VS_PLAYER)
     my_board.game_loop()
 
 
