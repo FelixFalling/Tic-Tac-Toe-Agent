@@ -20,7 +20,7 @@ class tic_tac_toe_board():
 
         if self.playing_type == PlayType.PLAYER_VS_PLAYER:
             print("Player vs Player")
-        elif passself.playing_type == PlayType.AGENT_VS_AGENT:
+        elif self.playing_type == PlayType.AGENT_VS_AGENT:
             print("Agent vs Agent")
         elif passself.playing_type == PlayType.AGENT_VS_PLAYER:
             print("Agent vs Player")
@@ -104,8 +104,13 @@ class tic_tac_toe_board():
         if self.playing_type == PlayType.PLAYER_VS_PLAYER:
             row = int(input("Select Row:")) - 1
             column = int(input("Select Column:")) - 1
-
             return row, column
+        elif self.playing_type == PlayType.AGENT_VS_AGENT:
+            #TODO IMPLENT AGENT VS AGENT ACTIONS
+            pass
+        elif self.playing_type == PlayType.AGENT_VS_PLAYER:
+            #TODO IMPLENT AGENT VS PLAYER ACTIONS
+            pass
 
 
     def print_board(self) -> None:
