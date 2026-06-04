@@ -219,3 +219,6 @@ __marimo__/
 
 # Ignore pdfs
 *.pdf
+
+# LaTeX report folder (source + build artifacts)
+report/
