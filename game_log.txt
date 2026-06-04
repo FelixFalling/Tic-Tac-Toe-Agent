@@ -1,0 +1,10 @@
+^D1: Player vs Player
+2: Train agent then play vs it
+Choose mode: Traceback (most recent call last):
+  File [35m"/Users/puff/Documents/school/artificial_intelligence_cs541/Tic-Tac-Toe-Agent/main.py"[0m, line [35m306[0m, in [35m<module>[0m
+    [31mmain[0m[1;31m()[0m
+    [31m~~~~[0m[1;31m^^[0m
+  File [35m"/Users/puff/Documents/school/artificial_intelligence_cs541/Tic-Tac-Toe-Agent/main.py"[0m, line [35m276[0m, in [35mmain[0m
+    choice = [31minput[0m[1;31m("Choose mode: ")[0m.strip()
+             [31m~~~~~[0m[1;31m^^^^^^^^^^^^^^^^^[0m
+[1;35mEOFError[0m

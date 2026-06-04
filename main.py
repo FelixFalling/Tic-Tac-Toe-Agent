@@ -215,10 +215,10 @@ class tic_tac_toe_board():
             print(f"{i + 1} | {current_row}")
             print(separator)
 
-
-# --- Training ---
-
 def run_training(n_epochs=5000, epsilon_start=0.1, delta=0.001, m=50):
+    """
+    Basic Training loop as laid out
+    """
     agent = QAgent(learning_rate=0.5, gamma=0.9)
     random_opponent = RandomAgent()
     scores = []
@@ -236,8 +236,7 @@ def run_training(n_epochs=5000, epsilon_start=0.1, delta=0.001, m=50):
         # test 10 games as X vs random O
         score = 0.0
         for _ in range(10):
-            test_board = tic_tac_toe_board(3, 3, PlayType.AGENT_VS_AGENT,
-                                           player_x=agent, player_o=random_opponent, verbose=False)
+            test_board = tic_tac_toe_board(3, 3, PlayType.AGENT_VS_AGENT,player_x=agent, player_o=random_opponent, verbose=False)
             result, winner = test_board.game_loop(epsilon=0.0, train=False)
             if result == GameState.WIN and winner == 'x':
                 score += 1.0
@@ -251,9 +250,16 @@ def run_training(n_epochs=5000, epsilon_start=0.1, delta=0.001, m=50):
     return agent, scores
 
 
-def plot_training(scores):
+def plot_training(scores, interval=100):
+    # average score over every `interval` epochs so the trend is visible
+    averaged = [
+        sum(scores[i:i + interval]) / interval
+        for i in range(0, len(scores), interval)
+    ]
+    x = [i * interval for i in range(len(averaged))]
+
     plt.figure(figsize=(10, 5))
-    plt.plot(scores)
+    plt.plot(x, averaged)
     plt.xlabel("Epoch")
     plt.ylabel("Score vs Random (out of 1.0)")
     plt.title("Q-Agent Training Progress")
